@@ -1,0 +1,39 @@
+version: '2'
+services:
+  web:
+    restart: always
+    dns:
+      - 8.8.8.8
+    build:
+      context: ./web
+    environment:
+      RAILS_ENV: production
+      WEB_DATABASE_HOST: db
+      SECRET_KEY_BASE: a964ebdd62805aeff7659781ae0e017e94b9fb8a90a8187dd01f68fefa3791cd1d72ea36f469bc3ad3da1efa36981147afdffe2461afac518ee2a672fb201948
+      WEB_DATABASE_PASSWORD: postgres
+    expose:
+      - "8080"
+    volumes:
+      - ./web:/my_project
+    links:
+      - db
+  nginx:
+    build: ./nginx
+    links:
+     - web
+    #  - api
+    ports:
+     - "80:80"
+    expose:
+     - "80"
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
+    volumes_from:
+      - web
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"

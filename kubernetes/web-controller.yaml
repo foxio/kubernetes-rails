@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: www-v1
+  labels:
+    app: www
+spec:
+  replicas: 2
+  selector:
+    app: www
+    version: v1
+  template:
+    metadata:
+      labels:
+        app: www
+        version: v1
+    spec:
+     volumes:
+     - name: web-assets
+       emptyDir: {}
+     - name: web-sock
+       emptyDir: {}
+     containers:
+     - name: web
+       image: gcr.io/foxio-rnd/rails-image:v1
+       ports:
+         - name: web-server
+           containerPort: 8080
+       env:
+        - name: RAILS_ENV
+          value: production
+        - name: WEB_DATABASE_HOST
+          value: db
+        - name: SECRET_KEY_BASE
+          value: 4fb2a451674dd7c5641577a0031847d82247bd137fedb0ba91c6d1a6ccbc8d2da370ffa164503f50c2f2c121f46f1f21b89dc946633924e0c464bdb69b368415
+       volumeMounts:
+        - mountPath: /assets
+          name: web-assets
+        - mountPath: /tmp
+          name: web-sock
+       lifecycle:
+        postStart:
+         exec:
+          command:
+            - /bin/bash
+            - -c
+            - /my_project/kubernetes-post-start.sh
+     - name: nginx
+       image: gcr.io/foxio-rnd/nginx-image:v1
+       ports:
+        - name: http-server
+          containerPort: 80
+        - name: https-server
+          containerPort: 443
+       volumeMounts:
+       - mountPath: /my_project/public
+         name: web-assets
+         readOnly: true
+       - mountPath: /tmp
+         name: web-sock

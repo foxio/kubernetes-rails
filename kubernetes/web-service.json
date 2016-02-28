@@ -1,0 +1,28 @@
+{
+   "kind":"Service",
+   "apiVersion":"v1",
+   "metadata":{
+      "name":"www",
+      "labels":{
+         "app":"www"
+      }
+   },
+   "spec":{
+      "ports": [
+         {
+           "name": "http",
+           "port":80,
+           "targetPort":"http-server"
+         },
+         {
+           "name": "https",
+           "port":443,
+           "targetPort":"https-server"
+         }
+      ],
+      "selector":{
+         "app":"www"
+      },
+      "type": "LoadBalancer"
+   }
+}

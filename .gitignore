@@ -1,0 +1,6 @@
+.vagrant
+cookbooks
+tmp
+web/public/exports
+web/vendor/assets/bower_components
+web/public/assets
