@@ -2,6 +2,8 @@
 
 **NOTE** This is not production ready. The env is set to "production" as a proof of concept to show the asset pipeline is working in prod.
 
+![Server setup diagram](kubernetes-rails.png)
+
 ## Run locally
 1. `docker-machine create --driver virtualbox --virtualbox-disk-size "30000"  --virtualbox-memory "8096" kubernetes-rails`
 2. `docker-machine start kubernetes-rails`
@@ -37,3 +39,4 @@ You will need to change **foxio-rnd** to your GCE project name.
 
 ## TODO
 1. automate the DB setup
+2. setup DB cluster
