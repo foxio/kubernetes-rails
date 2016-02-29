@@ -40,3 +40,4 @@ You will need to change **foxio-rnd** to your GCE project name.
 ## TODO
 1. automate the DB setup
 2. setup DB cluster
+3. Setup to run Kubernetes locally
