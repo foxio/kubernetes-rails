@@ -2,6 +2,8 @@
 
 **NOTE** This is not production ready. The env is set to "production" as a proof of concept to show the asset pipeline is working in prod.
 
+This project is a working example of building a rails app using Docker, and deploying using Kubernetes to GCE. Each Pod consists of an NGINX and Rails container (running unicorn). This allows NGINX to host static files using an [emptyDir](http://kubernetes.io/v1.1/docs/user-guide/volumes.html#emptydir) volume instead of a a more [persistent volume](http://kubernetes.io/v1.1/docs/user-guide/volumes.html).
+
 ![Server setup diagram](kubernetes-rails.png)
 
 ## Run locally
