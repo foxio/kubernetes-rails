@@ -11,6 +11,7 @@ This project is a working example of building a rails app using Docker, and depl
 2. `docker-machine start kubernetes-rails`
 3. `eval "$(docker-machine env kubernetes-rails)"`
 4. `docker-compose build && docker-compose up -d`
+5. `docker-compose run --rm web rake db:create`
 
 ## Build images
 You will need to change **foxio-rnd** to your GCE project name.
